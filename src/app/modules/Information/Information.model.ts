@@ -4,8 +4,8 @@ import { IInformation } from './Information.interface';
 const informationSchema = new Schema<IInformation>({
   title: {
     type: String,
-    required: true,
-    trim: true
+    trim: true,
+    default: ""
   },
   subTitle: {
     type: String,
