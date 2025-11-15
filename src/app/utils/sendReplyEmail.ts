@@ -15,16 +15,15 @@ const sendReplyEmail = async (email: string, replyMessage: string) => {
 
 
   const mailOptions = {
-    from: `NMP Ecommerce ${config.smtp_from}`, //sender email address//smtp-username
+    from: `Online Corner Store ${config.smtp_from}`, //sender email address//smtp-username
     to: email, //receiver email address
-    subject: "Reply Message - MTK Ecommerce",
+    subject: "Reply Message",
     html: `
     <!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Reply from MTK Ecommerce</title>
       <!--[if mso]>
       <noscript>
         <xml>
@@ -55,7 +54,7 @@ const sendReplyEmail = async (email: string, replyMessage: string) => {
                         </div>
                         
                         <!-- Company Name -->
-                        <h1 style="color: #ffffff; margin: 0 0 8px 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">MTK Ecommerce</h1>
+                        <h1 style="color: #ffffff; margin: 0 0 8px 0; font-size: 32px; font-weight: 700; letter-spacing: -0.5px;">Online Corner Store</h1>
                         <p style="color: #d1fae5; margin: 0; font-size: 18px; font-weight: 500;">Customer Support Reply</p>
                       </td>
                     </tr>
@@ -90,19 +89,9 @@ const sendReplyEmail = async (email: string, replyMessage: string) => {
                           <!-- Support Team Signature -->
                           <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #d1fae5;">
                             <p style="color: #059669; margin: 0; font-size: 14px; font-weight: 600;">
-                              — MTK Ecommerce Support Team
+                              — Online Corner Store Support Team
                             </p>
                           </div>
-                        </div>
-                        
-                        <!-- Call to Action -->
-                        <div style="text-align: center; margin: 40px 0;">
-                          <p style="color: #6b7280; margin: 0 0 20px 0; font-size: 16px;">
-                            Need further assistance? We're here to help!
-                          </p>
-                          <a href="mailto:support@mtkecommerce.com" style="background: linear-gradient(135deg, #059669 0%, #047857 100%); color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 10px; font-size: 16px; font-weight: 600; display: inline-block; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3); transition: all 0.3s ease;">
-                            📧 Contact Support
-                          </a>
                         </div>
                       </td>
                     </tr>
