@@ -196,9 +196,12 @@ const updateBrandService = async (brandId: string, payload: Partial<IBrand>) => 
     const slug = slugify(name).toLowerCase();
     //set slug
     payload.slug = slug;
+    
+    const associatedTypeId = typeId || brand.typeId;
+    
     const brandExist = await BrandModel.findOne({
       _id: { $ne: brandId},
-      typeId: brand.typeId,
+      typeId: associatedTypeId,
       slug
     })
     if (brandExist) {

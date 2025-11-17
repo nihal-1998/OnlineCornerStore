@@ -202,9 +202,12 @@ const updateFlavorService = async (flavorId: string, payload: Partial<IFlavor>) 
   //check name
   if (name) {
     const slug = slugify(name).toLowerCase();
+
+    const associatedTypeId = typeId || existingFlavor.typeId;
+
     const flavorExist = await FlavorModel.findOne({
       _id: { $ne: flavorId },
-      typeId: existingFlavor.typeId,
+      typeId: associatedTypeId,
       slug
     })
     if (flavorExist) {
