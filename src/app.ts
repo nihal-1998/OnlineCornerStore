@@ -23,13 +23,11 @@ app.use(
             "http://localhost:3001",
             "http://localhost:3002",
             "http://localhost:3003",
-            "http://16.171.171.18:4173",
-            "http://16.171.171.18:5173",
-            "http://16.171.171.18:3000",
-            "http://16.171.171.18:30001",
+            "http://13.61.205.202:4173",
+            "http://13.61.205.202:5173",
+            "http://13.61.205.202:3000",
+            "http://16.171.171.18:3001",
             "http://10.10.20.24:3000",
-            "https://onlinecornerstore.com",
-            "https://dashboard.onlinecornerstore.com"
         ],
         credentials: true,
     }),
@@ -45,7 +43,7 @@ app.use(cookieParser())
 app.use(morgan('dev'))
 
 app.get('/', (req:Request, res:Response) => {
-    res.send('NMP ecommerce server is running...');
+    res.send('NMP Nihal ecommerce server is running...');
 });
 
 
