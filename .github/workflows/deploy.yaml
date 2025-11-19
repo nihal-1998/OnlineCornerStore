@@ -65,13 +65,13 @@ jobs:
           ssh $EC2_USER@$EC2_HOST "echo \"$ENV_FILE\" > ~/nmp_backend/.env"
           
           # install production dependencies on EC2
-          ssh $EC2_USER@$EC2_HOST "cd ~/nmp_backend && export PATH=$PATH:/run/user/1000/fnm_multishells/1687_1763385253303/bin && yarn install --frozen-lockfile"
+          ssh $EC2_USER@$EC2_HOST "cd ~/nmp_backend && export PATH=$PATH:/run/user/1000/fnm_multishells/6355_1763557609180/bin && yarn install --frozen-lockfile"
           
           # Stop existing PM2 process if it exists
-          ssh $EC2_USER@$EC2_HOST "cd ~/nmp_backend && export PATH=$PATH:/run/user/1000/fnm_multishells/1687_1763385253303/bin && pm2 delete nmp_backend || true"
+          ssh $EC2_USER@$EC2_HOST "cd ~/nmp_backend && export PATH=$PATH:/run/user/1000/fnm_multishells/6355_1763557609180/bin && pm2 delete nmp_backend || true"
 
           # Start the nmp_backendlication with PM2
-          ssh $EC2_USER@$EC2_HOST "cd ~/nmp_backend && export PATH=$PATH:/run/user/1000/fnm_multishells/1687_1763385253303/bin && pm2 start dist/server.js --name nmp_backend"
+          ssh $EC2_USER@$EC2_HOST "cd ~/nmp_backend && export PATH=$PATH:/run/user/1000/fnm_multishells/6355_1763557609180/bin && pm2 start dist/server.js --name nmp_backend"
   
   
 
