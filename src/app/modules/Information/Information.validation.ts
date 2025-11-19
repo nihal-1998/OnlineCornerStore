@@ -4,14 +4,12 @@ export const createInformationValidationSchema = z.object({
   title: z
     .string({
       invalid_type_error: "title must be string",
-      required_error: "title is required",
     })
     .trim()
     .optional(),
   subTitle: z
     .string({
       invalid_type_error: "subTitle must be string",
-      required_error: "subTitle is required",
     })
     .trim()
     .optional(),

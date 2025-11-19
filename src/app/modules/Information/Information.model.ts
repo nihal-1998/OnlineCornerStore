@@ -9,8 +9,8 @@ const informationSchema = new Schema<IInformation>({
   },
   subTitle: {
     type: String,
-    required: true,
-    trim: true
+    trim: true,
+    default: ""
   },
   email: {
     type: String,
