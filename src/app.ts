@@ -30,7 +30,9 @@ app.use(
             "http://10.10.20.24:3000",
             "http://10.10.20.24:5173",
             "https://vape-frontend-dun.vercel.app",
-            "http://13.61.205.202",
+            "http://13.61.89.160:5173",
+            "http://13.61.89.160:3000",
+            "http://13.61.89.160",
             "https://nmp-dashboard.vercel.app"
         ],
         credentials: true,
