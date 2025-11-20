@@ -53,7 +53,7 @@ app.use(cookieParser())
 app.use(morgan('dev'))
 
 app.get('/', (req:Request, res:Response) => {
-    res.send('NMP Nihal ecommerce server is running...');
+    res.send('Nihal ecommerce server is running...');
 });
 
 
