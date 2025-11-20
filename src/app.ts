@@ -35,7 +35,9 @@ app.use(
             "http://13.61.89.160",
             "https://nmp-dashboard.vercel.app",
             "http://qwikr.us",
-            "http://dashboard.qwikr.us"
+            "http://dashboard.qwikr.us",
+            "https://qwikr.us",
+            "https://dashboard.qwikr.us"
         ],
         credentials: true,
     }),
