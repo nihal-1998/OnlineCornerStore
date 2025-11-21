@@ -15,6 +15,7 @@ import sendDeliveredEmail from '../../utils/sendDeliveredEmail';
 import sendCancelledEmail from '../../utils/sendCancelledEmail';
 import calculateShippingCost from '../../utils/calculateShippingCost';
 import hasDuplicates from '../../utils/hasDuplicates';
+import sendOrderConfirmMail from '../../utils/sendOrderConfirmMail';
 
 const stripe = new Stripe(config.stripe_secret_key as string);
 
@@ -156,7 +157,8 @@ const createOrderService = async (
           success_url: `${config.frontend_url}/order-confirmed?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${config.frontend_url}/cancel`,
         });
-  
+
+      
       //transaction success
       await session.commitTransaction();
       await session.endSession();
@@ -191,10 +193,9 @@ const verifySessionService = async (sessionId: string) => {
   const order = await OrderModel.findOne({
     _id: metadata.orderId,
     email: metadata.email,
-    paymentStatus: "paid"
   });
 
-  if (order) {
+  if (order?.paymentStatus==="paid") {
     throw new ApiError(400, "Payment already completed");
   }  
 
@@ -240,6 +241,12 @@ const verifySessionService = async (sessionId: string) => {
     }, {
       session
     })
+
+     
+    //send Email
+     if(order){
+      await sendOrderConfirmMail(metadata.email, order);
+     }
 
     //transaction success
     await session.commitTransaction();
@@ -382,7 +389,7 @@ const createOrderWithCashService = async (
       );
 
       //create an order
-      await OrderModel.create([
+      const newOrder = await OrderModel.create([
         {
           fullName,
           email,
@@ -397,6 +404,11 @@ const createOrderWithCashService = async (
           shipping: shippingAddress
         }
       ], {session});
+
+    
+     if(newOrder.length > 0){
+      await sendOrderConfirmMail(email, newOrder[0]);
+     }
 
       //transaction success
       await session.commitTransaction();
