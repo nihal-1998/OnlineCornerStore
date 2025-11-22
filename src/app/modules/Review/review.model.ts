@@ -33,7 +33,7 @@ const reviewSchema = new Schema<IReview>(
       type: String,
       required: true,
       trim: true,
-      minlength: [5, "Comment must be at least 5 characters long"],
+      minlength: [3, "Comment must be at least 3 characters long"],
       maxlength: [500, "Comment cannot exceed 500 characters"],
     },
     hidden: {
