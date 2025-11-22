@@ -11,6 +11,7 @@ import ProductModel from "../Product/Product.model";
 
 const createReviewService = async (
   loginUserId: string,
+  loginUserEmail: string,
   payload: IReviewPayload
 ) => {
   
@@ -28,7 +29,7 @@ const createReviewService = async (
   //check order
    const order = await OrderModel.findOne({
     _id: orderId,
-    userId: loginUserId
+    email: loginUserEmail
    });
   if (!order) {
     throw new ApiError(404, "Order Not Found");

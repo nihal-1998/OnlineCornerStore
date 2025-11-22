@@ -8,8 +8,10 @@ import { createReviewService, deleteReviewService, getTestimonialsService, getUs
 
 const createReview = catchAsync(async (req, res) => {
   const loginUserId = req.headers.id;
+  const loginUserEmail = req.headers.email;
   const result = await createReviewService(
     loginUserId as string,
+    loginUserEmail as string,
     req.body
   );
 
