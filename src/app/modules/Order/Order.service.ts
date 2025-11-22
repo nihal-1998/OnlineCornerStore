@@ -87,6 +87,7 @@ const createOrderService = async (
   const shippingCost = await calculateShippingCost(subTotal);
   //count total
   const total = Number(subTotal + shippingCost);
+
  
   const lineItems = cartItems?.map((product) => ({
     price_data: {
@@ -94,10 +95,11 @@ const createOrderService = async (
       product_data: {
         name: product.name,
       },
-      unit_amount: product.price * 100, // price in cents
+      unit_amount: Math.round(Number(product.price) * 100), // price in cents
     },
     quantity: product.quantity,
   }));
+
 
 
     // add shipping as one item for the order
@@ -108,11 +110,12 @@ const createOrderService = async (
         product_data: {
           name: "Shipping Cost",
         },
-        unit_amount: shippingCost * 100, // in cents
+        unit_amount: Math.round(shippingCost * 100), // in cents
       },
       quantity: 1,
     });
   }
+
 
    //generate token
   const token = Math.floor(100000 + Math.random() * 900000);
