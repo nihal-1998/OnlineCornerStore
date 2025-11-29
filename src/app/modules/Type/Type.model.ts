@@ -14,6 +14,14 @@ const categorySchema = new Schema<IType>({
         required: true,
         trim: true,
         unique: true
+    },
+    description: {
+        type: String,
+        trim: true
+    },
+    image: {
+        type: String,
+        trim: true
     }
 }, {
     timestamps: true,

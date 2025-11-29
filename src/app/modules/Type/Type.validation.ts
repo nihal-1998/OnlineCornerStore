@@ -15,4 +15,16 @@ export const typeValidationSchema = z.object({
         .regex(/^[^~!@#$%\^*\+\?><=;:"]*$/, {
             message: 'name cannot contain special characters: ~ ! @ # $ % ^ * + ? > < = ; : "',
         }),
+    description: z
+        .string({
+            invalid_type_error: "description must be string",
+        })
+        .trim()
+        .optional(),
+    image: z
+        .string({
+            invalid_type_error: "image must be string",
+        })
+        .trim()
+        .optional(),
 });

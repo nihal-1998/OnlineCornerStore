@@ -12,7 +12,7 @@ import FlavorModel from "../Flavor/Flavor.model";
 
 
 
-const createTypeService = async (name: string) => {
+const createTypeService = async (name: string, description?: string, image?: string) => {
     const slug = slugify(name).toLowerCase();
     
     //check type is already existed
@@ -26,7 +26,9 @@ const createTypeService = async (name: string) => {
 
     const result = await TypeModel.create({
          name,
-         slug
+         slug,
+         ...(description && { description }),
+         ...(image && { image })
     })
     return result;
 }
@@ -65,6 +67,8 @@ const getTypesService = async (query: TTypeQuery) => {
       $project: {
         _id: 1,
         name: 1,
+        description: 1,
+        image: 1,
       },
     },
     { $skip: skip }, 
@@ -102,6 +106,8 @@ const getExportTypesService = async () => {
       $project: {
         _id: 1,
         name: 1,
+        description: 1,
+        image: 1,
       },
     },
   ]);
@@ -133,7 +139,7 @@ const getFilterOptionsService = async (typeId: string) => {
 };
 
 
-const updateTypeService = async (typeId: string, name: string) => {
+const updateTypeService = async (typeId: string, name: string, description?: string, image?: string) => {
     if (!Types.ObjectId.isValid(typeId)) {
         throw new ApiError(400, "typeId must be a valid ObjectId")
     }
@@ -152,12 +158,22 @@ const updateTypeService = async (typeId: string, name: string) => {
         throw new ApiError(409, 'Sorry! This type is already existed');
     }
 
+    const updateData: any = {
+        name,
+        slug
+    };
+
+    if (description !== undefined) {
+        updateData.description = description;
+    }
+
+    if (image !== undefined) {
+        updateData.image = image;
+    }
+
     const result = await TypeModel.updateOne(
         { _id: typeId },
-        {
-            name,
-            slug
-        }
+        updateData
     )
 
     return result;

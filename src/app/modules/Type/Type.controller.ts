@@ -4,8 +4,8 @@ import { createTypeService, deleteTypeService, getTypesService, getTypeDropDownS
 
 
 const createType = catchAsync(async (req, res) => {
-  const { name } = req.body;
-  const result = await createTypeService(name);
+  const { name, description, image } = req.body;
+  const result = await createTypeService(name, description, image);
 
   sendResponse(res, {
     statusCode: 201,
@@ -66,8 +66,8 @@ const getFilterOptions = catchAsync(async (req, res) => {
 
 const updateType = catchAsync(async (req, res) => {
   const { typeId } = req.params;
-  const { name } = req.body;
-  const result = await updateTypeService(typeId, name);
+  const { name, description, image } = req.body;
+  const result = await updateTypeService(typeId, name, description, image);
 
   sendResponse(res, {
     statusCode: 200,
