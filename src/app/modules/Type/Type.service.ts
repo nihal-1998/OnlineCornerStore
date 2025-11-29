@@ -133,11 +133,7 @@ const getFilterOptionsService = async (typeId: string) => {
 };
 
 
-<<<<<<< Updated upstream
-const updateTypeService = async (typeId: string, name: string) => {
-=======
 const updateTypeService = async (typeId: string, name?: string, description?: string, image?: string) => {
->>>>>>> Stashed changes
     if (!Types.ObjectId.isValid(typeId)) {
         throw new ApiError(400, "typeId must be a valid ObjectId")
     }
@@ -149,8 +145,6 @@ const updateTypeService = async (typeId: string, name?: string, description?: st
 
     const updateData: any = {};
 
-<<<<<<< Updated upstream
-=======
     if (name !== undefined && name !== null && name !== '') {
         const slug = slugify(name).toLowerCase();
         const typeExist = await TypeModel.findOne({
@@ -176,7 +170,6 @@ const updateTypeService = async (typeId: string, name?: string, description?: st
         throw new ApiError(400, 'No fields to update');
     }
 
->>>>>>> Stashed changes
     const result = await TypeModel.updateOne(
         { _id: typeId },
         {

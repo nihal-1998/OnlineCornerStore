@@ -15,8 +15,6 @@ export const typeValidationSchema = z.object({
         .regex(/^[^~!@#$%\^*\+\?><=;:"]*$/, {
             message: 'name cannot contain special characters: ~ ! @ # $ % ^ * + ? > < = ; : "',
         }),
-<<<<<<< Updated upstream
-=======
     description: z
         .string({
             invalid_type_error: "description must be string",
@@ -58,5 +56,4 @@ export const updateTypeValidationSchema = z.object({
         })
         .trim()
         .optional(),
->>>>>>> Stashed changes
 });
