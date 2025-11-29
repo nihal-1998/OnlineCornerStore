@@ -723,7 +723,9 @@ const getAllOrdersService = async (query: TOrderQuery) => {
     page = 1, 
     limit = 10, 
     sortOrder = "desc",
-    sortBy = "createdAt", 
+    sortBy = "createdAt",
+    status,
+    paymentStatus,
     ...filters  // Any additional filters
   } = query;
 
@@ -743,6 +745,30 @@ const getAllOrdersService = async (query: TOrderQuery) => {
   let filterQuery = {};
   if (filters) {
     filterQuery = makeFilterQuery(filters);
+  }
+
+  // Validate and add status filter
+  if (status) {
+    const validStatuses = ['processing', 'shipped', 'delivered', 'cancelled'];
+    if (!validStatuses.includes(status)) {
+      throw new ApiError(400, `status must be one of: ${validStatuses.join(', ')}`);
+    }
+    filterQuery = {
+      ...filterQuery,
+      status: status
+    };
+  }
+
+  // Validate and add paymentStatus filter
+  if (paymentStatus) {
+    const validPaymentStatuses = ['paid', 'unpaid', 'failled', 'cash'];
+    if (!validPaymentStatuses.includes(paymentStatus)) {
+      throw new ApiError(400, `paymentStatus must be one of: ${validPaymentStatuses.join(', ')}`);
+    }
+    filterQuery = {
+      ...filterQuery,
+      paymentStatus: paymentStatus
+    };
   }
   const result = await OrderModel.aggregate([
      {

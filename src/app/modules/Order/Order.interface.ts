@@ -45,7 +45,8 @@ export type TOrderQuery = {
   limit?: string;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
-  status?: string,
+  status?: string;
+  paymentStatus?: string;
 };
 export type TUserOrderQuery = {
   searchTerm?: string;
