@@ -12,7 +12,7 @@ import FlavorModel from "../Flavor/Flavor.model";
 
 
 
-const createTypeService = async (name: string) => {
+const createTypeService = async (name: string, description?: string, image?: string) => {
     const slug = slugify(name).toLowerCase();
     
     //check type is already existed
@@ -26,7 +26,9 @@ const createTypeService = async (name: string) => {
 
     const result = await TypeModel.create({
          name,
-         slug
+         slug,
+         ...(description && { description }),
+         ...(image && { image })
     })
     return result;
 }
@@ -172,10 +174,7 @@ const updateTypeService = async (typeId: string, name?: string, description?: st
 
     const result = await TypeModel.updateOne(
         { _id: typeId },
-        {
-            name,
-            slug
-        }
+        updateData
     )
 
     return result;

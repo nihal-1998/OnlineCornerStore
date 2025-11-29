@@ -4,8 +4,8 @@ import { createTypeService, deleteTypeService, getTypesService, getTypeDropDownS
 
 
 const createType = catchAsync(async (req, res) => {
-  const { name } = req.body;
-  const result = await createTypeService(name);
+  const { name, description, image } = req.body;
+  const result = await createTypeService(name, description, image);
 
   sendResponse(res, {
     statusCode: 201,
