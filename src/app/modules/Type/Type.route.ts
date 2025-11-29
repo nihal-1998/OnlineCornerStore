@@ -3,7 +3,7 @@ import AuthMiddleware from '../../middlewares/AuthMiddleware';
 import { UserRole } from '../User/user.constant';
 import validationMiddleware from '../../middlewares/validationMiddleware';
 import TypeController from './Type.controller';
-import { typeValidationSchema } from './Type.validation';
+import { typeValidationSchema, updateTypeValidationSchema } from './Type.validation';
 
 const router = express.Router();
 
@@ -34,7 +34,7 @@ router.get(
 router.patch(
   "/update-type/:typeId",
   AuthMiddleware(UserRole.admin, UserRole.super_admin),
-  validationMiddleware(typeValidationSchema),
+  validationMiddleware(updateTypeValidationSchema),
   TypeController.updateType
 );
 router.delete(

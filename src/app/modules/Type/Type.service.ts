@@ -133,7 +133,11 @@ const getFilterOptionsService = async (typeId: string) => {
 };
 
 
+<<<<<<< Updated upstream
 const updateTypeService = async (typeId: string, name: string) => {
+=======
+const updateTypeService = async (typeId: string, name?: string, description?: string, image?: string) => {
+>>>>>>> Stashed changes
     if (!Types.ObjectId.isValid(typeId)) {
         throw new ApiError(400, "typeId must be a valid ObjectId")
     }
@@ -143,15 +147,36 @@ const updateTypeService = async (typeId: string, name: string) => {
         throw new ApiError(404, 'This typeId not found');
     }
 
-    const slug = slugify(name).toLowerCase();
-    const typeExist = await TypeModel.findOne({
-        _id: { $ne: typeId },
-        slug
-    })
-    if (typeExist) {
-        throw new ApiError(409, 'Sorry! This type is already existed');
+    const updateData: any = {};
+
+<<<<<<< Updated upstream
+=======
+    if (name !== undefined && name !== null && name !== '') {
+        const slug = slugify(name).toLowerCase();
+        const typeExist = await TypeModel.findOne({
+            _id: { $ne: typeId },
+            slug
+        })
+        if (typeExist) {
+            throw new ApiError(409, 'Sorry! This type is already existed');
+        }
+        updateData.name = name;
+        updateData.slug = slug;
     }
 
+    if (description !== undefined) {
+        updateData.description = description;
+    }
+
+    if (image !== undefined) {
+        updateData.image = image;
+    }
+
+    if (Object.keys(updateData).length === 0) {
+        throw new ApiError(400, 'No fields to update');
+    }
+
+>>>>>>> Stashed changes
     const result = await TypeModel.updateOne(
         { _id: typeId },
         {
