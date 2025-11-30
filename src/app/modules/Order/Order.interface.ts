@@ -30,6 +30,7 @@ export interface IOrder {
   shippingCost: number;
   subTotal: number;
   total: number;
+  tax?: number;
   tips?: number;
   transactionId: string;
   paymentMethod?: string;

@@ -85,8 +85,10 @@ const createOrderService = async (
   const subTotal = cartItems?.reduce((total, currentValue) => total + (currentValue?.price * currentValue.quantity), 0);
   // //count shipping cost
   const shippingCost = await calculateShippingCost(subTotal);
+  //count tax (NY Sales Tax 8.8875%)
+  const tax = Number((subTotal * 0.088875).toFixed(2));
   //count total
-  const total = Number(subTotal + shippingCost);
+  const total = Number(subTotal + tax + shippingCost);
 
  
   const lineItems = cartItems?.map((product) => ({
@@ -101,6 +103,20 @@ const createOrderService = async (
   }));
 
 
+
+    // add tax as one item for the order
+  if (tax > 0) {
+    lineItems.push({
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: "NY Sales Tax (8.8875%)",
+        },
+        unit_amount: Math.round(tax * 100), // price in cents
+      },
+      quantity: 1,
+    });
+  }
 
     // add shipping as one item for the order
   if (shippingCost > 0) {
@@ -139,6 +155,7 @@ const createOrderService = async (
           products: cartItems,
           subTotal,
           shippingCost,
+          tax,
           total,
           transactionId,
           shipping: shippingAddress
@@ -327,8 +344,10 @@ const createOrderWithCashService = async (
   const subTotal = cartItems?.reduce((total, currentValue) => total + (currentValue?.price * currentValue.quantity), 0);
   // //count shipping cost
   const shippingCost = await calculateShippingCost(subTotal);
+  //count tax (NY Sales Tax 8.8875%)
+  const tax = Number((subTotal * 0.088875).toFixed(2));
   //count total
-  const total = Number(subTotal + shippingCost);
+  const total = Number(subTotal + tax + shippingCost);
  
   const lineItems = cartItems?.map((product) => ({
     price_data: {
@@ -401,6 +420,7 @@ const createOrderWithCashService = async (
           products: cartItems,
           subTotal,
           shippingCost,
+          tax,
           paymentStatus: "cash",
           total,
           transactionId,

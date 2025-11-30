@@ -32,7 +32,34 @@ const getStatsService = async () => {
     {
       $group: {
         _id: 0,
-        total: { $sum: "$totalPrice" },
+        total: { 
+          $sum: { 
+            $add: [
+              "$total",
+              { $ifNull: ["$tips", 0] }
+            ]
+          }
+        },
+      }
+    }
+  ])
+
+  const totalTaxResult = await OrderModel.aggregate([
+    {
+      $match: {
+        status: "delivered",
+        $or: [
+          { paymentStatus: "paid" },
+          { paymentStatus: "cash" }
+        ]
+      }
+    },
+    {
+      $group: {
+        _id: 0,
+        total: { 
+          $sum: { $ifNull: ["$tax", 0] }
+        },
       }
     }
   ])
@@ -42,7 +69,8 @@ const getStatsService = async () => {
   return {
     totalUsers,
     completedOrders,
-    totalIncome: totalIncomeResult?.length > 0 ? totalIncomeResult[0]?.total : 0,
+    totalIncome: totalIncomeResult?.length > 0 ? Math.round((totalIncomeResult[0]?.total || 0) * 100) / 100 : 0,
+    totalTax: totalTaxResult?.length > 0 ? Math.round((totalTaxResult[0]?.total || 0) * 100) / 100 : 0,
     totalProducts
   }
 }
@@ -153,7 +181,14 @@ const getIncomeOverviewService = async (year: string) => {
           year: { $year: "$createdAt" },
           month: { $month: "$createdAt" },
         },
-        income: { $sum: "$totalPrice" },
+        income: { 
+          $sum: { 
+            $add: [
+              "$total",
+              { $ifNull: ["$tips", 0] }
+            ]
+          }
+        },
       },
     },
     {
@@ -203,7 +238,7 @@ const getIncomeOverviewService = async (year: string) => {
     const found = result?.find((item) => item.month === month);
     return {
       month,
-      income: found ? found.income : 0
+      income: found ? Math.round((found.income || 0) * 100) / 100 : 0
     };
   });
  
